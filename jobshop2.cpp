@@ -65,7 +65,7 @@ bool runTime(Jobs *instance, Machine *machine, Ans *ans, int ileCzasu)
 
                 addKey(*instance);
                 
-                if (instance->pTime[m][0]!=-1) // jeśli ten jobs chce iść jeszcze na jakąś maszynę to wstawiamy go w kolejkę do tej maszyny
+                if (instance->order[m][0]!=-1) // jeśli ten jobs chce iść jeszcze na jakąś maszynę to wstawiamy go w kolejkę do tej maszyny
                 {
                     int nrNowejMaszyny = instance->order[m][0];
                     if(zabronione[nrNowejMaszyny]==0)
@@ -207,7 +207,7 @@ void printAns(Ans &ans)
     }
 }
 
-int znajdzNajbizszy(Machine *machine)
+int znajdzNajbizszy(Machine *machine) //używane by przeliczyć ile czasu maksymalnie można odjąć (aby nie odejmować po jednej jednostce)
 {
     int temp;
     int minT;
@@ -376,7 +376,7 @@ int addJob(Jobs *instance, Machine *machine, int nrM, Ans *ans) // nrM - nrJobsa
 	{
         machine->mJobs[nrMaszyny][k] = make_tuple(instance->pTime[i][a],instance->keyI[i],i); //tworzymy tupla na pierwszym miejscu
         instance->pTime[i].erase(instance->pTime[i].begin()); //usuwamy dane zapotrzebowanie
-        instance->pTime[i].push_back(-1);
+        instance->pTime[i].push_back(0);
         instance->order[i].erase(instance->order[i].begin()); // -||-
         instance->order[i].push_back(-1);
         addAns(ans, nrM); // dodajemy czas do Odp, ponieważ ten Jobs już rusza
@@ -391,7 +391,7 @@ int addJob(Jobs *instance, Machine *machine, int nrM, Ans *ans) // nrM - nrJobsa
 	    {
             machine->mJobs[nrMaszyny][m] = make_tuple(instance->pTime[i][a],instance->keyI[i],i); // wstawiamy tam tupla
             instance->pTime[i].erase(instance->pTime[i].begin()); // usuwamy dane zapotrzebowanie
-            instance->pTime[i].push_back(-1);
+            instance->pTime[i].push_back(0);
             instance->order[i].erase(instance->order[i].begin()); // -||-
             instance->order[i].push_back(-1);
         
@@ -419,7 +419,7 @@ int addJob(Jobs *instance, Machine *machine, int nrM, Ans *ans) // nrM - nrJobsa
             }
             // finalnie i tak wstawiliśmy gdzieś to zadanie więc możemy usunąć zapotrzebowanie z kolejki 
             instance->pTime[i].erase(instance->pTime[i].begin());
-            instance->pTime[i].push_back(-1);
+            instance->pTime[i].push_back(0);
             instance->order[i].erase(instance->order[i].begin());
             instance->order[i].push_back(-1);
         }
@@ -482,7 +482,7 @@ void createMachines(Jobs *instance, Machine *machine, Ans *ans)
     	{
             machine->mJobs[nMaszyny][k] = make_tuple(instance->pTime[i][a],instance->keyI[i],i); // wstawiamy tupla jobsa
             instance->pTime[i].erase(instance->pTime[i].begin()); // usuwamy dane zapotrzebowanie
-            instance->pTime[i].push_back(-1);
+            instance->pTime[i].push_back(0);
             instance->order[i].erase(instance->order[i].begin()); // -||-
             instance->order[i].push_back(-1);
         }
@@ -507,7 +507,7 @@ void createMachines(Jobs *instance, Machine *machine, Ans *ans)
             }
             }
             instance->pTime[i].erase(instance->pTime[i].begin()); // usuwamy dane zapotrzebowanie
-            instance->pTime[i].push_back(-1);
+            instance->pTime[i].push_back(0);
             instance->order[i].erase(instance->order[i].begin()); // -||-
             instance->order[i].push_back(-1);
         }
