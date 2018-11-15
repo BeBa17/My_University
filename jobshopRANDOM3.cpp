@@ -305,7 +305,6 @@ void initTaillard(string fileName)
     vector<vector<int>> pTime(jobs);
     vector<int> keyI(jobs); // for Jobs
     vector<vector<tuple<int,int,int>>> mJobs(machines); // for Machines
-    vector<int> Odp(ilePetli);
 
     for (int i = 0; i < jobs; i++)
     {
@@ -343,9 +342,8 @@ void initTaillard(string fileName)
     machine.mJobs = mJobs;
     machine.machines = machines;
 
-    Ans ans;
-    ans.Odp = Odp;
     ans.fileName = fileName;
+    file.close();
 
     addKey(instance);
     createMachines(&instance, &machine, &ans); // tworzymy maszyny, tzn początkowe kolejki do nich
@@ -356,10 +354,7 @@ void initTaillard(string fileName)
         czas ++;
         stop = runTime(&instance, &machine, &ans, ileCzasu);
     }
-    cout<< czas << endl;
-    printAns(ans);
-    file.close();
-    saveAns(&ans);
+    addAns(&ans);
 }
 
 int addJob(Jobs *instance, Machine *machine, int nrM, Ans *ans) // nrM - nrJobsa ktory skonczyl zadanie na jakiejs maszynie
@@ -525,10 +520,13 @@ int main(int argc, char* argv[])
         break;
     
     case 't':
+    for(l; l<ilePetli; l++)
+    {
         initTaillard(input);
         czas = 0;
         stop = false;
         ukonczonych = 0;
+    }
         break;
     
     default:
