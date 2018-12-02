@@ -6,8 +6,11 @@
 #include <chrono>
 #include <ctime>
 #include <algorithm>
+#include <cstdlib>
 
 using namespace std;
+
+#define NR 10
 
 string fileName;
 
@@ -149,24 +152,20 @@ class Solver
     const Instance * instance;
 
     vector<int> jProgT, jProg, machProgT;
-    vector<vector<int>> queue;
+
+    vector<int> sol, bestSol, finalSol;
 
 
 public:
     
     Solver(const Instance * inst) : instance(inst) 
     {
-        if (queue.size() == 0)
-        {
-            queue.resize(instance->machines);
-            for (int i = 0; i < instance->machines; i++)
-            {
-                queue[i].resize(instance->jobs);
-            }
-        }
-        if (jProgT.size() == 0) jProgT.resize(instance->jobs);
-        if (jProg.size() == 0) jProg.resize(instance->jobs);
-        if (machProgT.size() == 0) machProgT.resize(instance->machines);
+        if (jProgT.size() == 0)
+            jProgT.resize(instance->jobs);
+        if (jProg.size() == 0)
+            jProg.resize(instance->jobs);
+        if (machProgT.size() == 0)
+            machProgT.resize(instance->machines);
     }
 
     void schedule()
@@ -176,6 +175,101 @@ public:
             int job = chooseJob();
             scheduleNext(job);
         }
+    }
+
+    int schedule2()
+    {
+        for (int i = 0; i < instance->activities; i++)
+        {
+            int job = rand() % instance->jobs;
+            sol.push_back(job);
+            scheduleNext(job);
+        }
+        int temp = makeSpan();
+        cout << temp << endl;
+        return temp;
+    }
+
+    void solve2()
+    {
+        int bestMakeSpan;
+        for (int i = 0; i < instance->machines; i++)
+        {
+            bestMakeSpan = numeric_limits<int>::max();
+            for (int j = 0; j < NR; j++)
+            {
+                int temp = schedule2();
+                if (temp < bestMakeSpan)
+                {
+                    bestMakeSpan = temp;
+                    bestSol = sol;
+                }
+                restart();
+            }
+            for (int k = 0; k < instance->jobs; k++)
+            {
+                finalSol.push_back(bestSol[finalSol.size()+k]);
+            }
+        }
+
+        if (finalSol.size() != instance->activities) throw string("ERROR: Saving final solution failed.");
+
+        saveAns(finalSol, bestMakeSpan);
+    }
+
+    void saveAns(vector<int> finalSol, int bestMakeSpan)
+    {
+        restart();
+        vector<vector<int>> solution;
+        solution.resize(instance->jobs);
+        
+        for (int i = 0; i < finalSol.size(); i++)
+        {
+            int job = finalSol[i];
+            int machine = nextMachine(job);
+            int start = max (jProgT[job], machProgT[machine]);
+
+            solution[job].push_back(start);
+            scheduleNext(job);
+        }
+
+        int mkspn = makeSpan();
+
+        if (mkspn != bestMakeSpan)
+        {
+            throw string("ERROR: Makespans don't match.");
+        }
+        //file << mkspn << endl;
+        cout << mkspn << endl;
+
+        for (int j = 0; j < solution.size(); j++)
+        {
+            for (int k = 0; k < solution[j].size(); k++)
+            {
+                //file << solution [j][k];
+                cout << solution [j][k];
+                if (k < (solution[j].size()-1))
+                {
+                    //file << "\t";
+                    cout << "\t";
+                }
+            }
+            //file << endl;
+            cout << endl;
+        }
+
+        //file.close();
+    }
+
+    void restart()
+    {
+        jProgT.clear();
+        jProgT.resize(instance->jobs);
+        jProg.clear();
+        jProg.resize(instance->jobs);
+        machProgT.clear();
+        machProgT.resize(instance->machines);
+        sol.clear();
     }
 
     int makeSpan()
@@ -283,6 +377,8 @@ private:
 
 int main(int argc, char ** argv)
 {
+    srand(time(NULL));
+    
     if (argc != 3)
     {
         printf("Usage: %s <format> <inputfile>\nWhere <format> is b for beasley and t for tailard\n", argv[0]);
@@ -305,7 +401,14 @@ int main(int argc, char ** argv)
     }
 
     Solver solver(&instance);
-    solver.solve();
-    //solver.printVectors();
-    //printInstance(instance);
+    /*try
+    {
+        solver.solve2();
+    }
+    catch(string e)
+    {
+        cout<<e<<endl;
+        return -1;
+    }*/
+    //solver.solve();
 }
