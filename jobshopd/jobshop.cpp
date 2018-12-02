@@ -132,12 +132,15 @@ Instance initTaillard(string fileName)
         }
     }
 
+    int activities = jobs * machines;
+    
     Instance instance;
     instance.jobs = jobs;
     instance.machines = machines;
     instance.pTime = pTime;
     instance.order = order;
-    
+    instance.activities = activities;
+
     return instance;
 }
 
@@ -211,9 +214,15 @@ public:
         {
             for (int k = 0; k < solution[j].size(); k++)
             {
+                file << solution [j][k];
                 cout << solution [j][k];
-                if (k < (solution[j].size()-1)) cout << "\t";
+                if (k < (solution[j].size()-1))
+                {
+                    file << "\t";
+                    cout << "\t";
+                }
             }
+            file << endl;
             cout << endl;
         }
 
