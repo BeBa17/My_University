@@ -20,7 +20,7 @@ clock_t startC,stopC;
 double duration;
 bool first = true;
 float obszar = 0.8;
-float minut = 0.25;
+float minut = 0.15;
 
 struct Jobs
 {
@@ -258,14 +258,16 @@ void printBestAns(Ans &ans) // Chyba dobrze
 int znajdzNajbizszy(Machine *machine) //używane by przeliczyć ile czasu maksymalnie można odjąć (aby nie odejmować po jednej jednostce)
 {
     int temp;
-    int minT;
+    int minT=-1;
 
     for (int i = 0; i < machine->obslugiwane.size(); i++)
     {
+        //cout<<machine->obslugiwane.size()<<endl;
         if ( machine->obslugiwane[i] != zeroTuple )
         {
             temp = get<0>(machine->obslugiwane[i]);
-            if(temp < minT || !minT)
+            //cout<<temp<<endl;
+            if(temp < minT || minT==-1)
             {
                 minT = temp;
                 if (minT==0)
@@ -343,10 +345,12 @@ void initBeasley(string fileName)
     addJobToMachine(&instance,&machine,&ans);
     //printMachines(machine);
     //printAns(ans);
+    //cout<<"";
     while ( stop == false )
     {
         
         int ileCzasu = znajdzNajbizszy(&machine);
+        //cout<<ileCzasu<<endl;
         czas = czas + ileCzasu;
         stop = runTime(&instance, &machine, &ans, ileCzasu);
         addJobToMachine(&instance,&machine,&ans);
@@ -645,6 +649,7 @@ int main(int argc, char* argv[])
         ukonczonych = 0;
         stopC = clock();
         duration =(double)(stopC - startC);
+        //printAns(ans);
     }
     cout<<"Best:"<<endl;
     printBestAns(ans);
