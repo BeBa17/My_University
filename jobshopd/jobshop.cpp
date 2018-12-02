@@ -9,6 +9,8 @@
 
 using namespace std;
 
+string fileName;
+
 int max (int a, int b)
 {
     return a > b ? a : b;
@@ -180,10 +182,16 @@ public:
 
     void solve()
     {
-        ofstream file; file.open("output.txt");
+        ofstream file; //file.open("output.txt");
         //fstream results; results.open("results.txt", ios::app)
         vector<vector<int>> solution;
         solution.resize(instance->jobs);
+
+        int index = fileName.find_last_of("/\\");
+        string fileName2 = fileName.substr(index+1);
+        string str = "output/out_";
+        str.append(fileName2);
+        file.open(str.c_str());
 
         for (int i = 0; i < instance->activities; i++)
         {
@@ -271,16 +279,16 @@ int main(int argc, char ** argv)
         printf("Usage: %s <format> <inputfile>\nWhere <format> is b for beasley and t for tailard\n", argv[0]);
     }
     int format = *argv[1];
-    const char* input = argv[2];
+    fileName = argv[2];
     Instance instance;
     
     if (format == 'b')
     {
-        instance = initBeasley(input);
+        instance = initBeasley(fileName);
     }
     else if (format == 't')
     {
-        instance = initTaillard(input);
+        instance = initTaillard(fileName);
     }
     else
     {
