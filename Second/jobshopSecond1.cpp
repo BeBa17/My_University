@@ -20,7 +20,7 @@ clock_t startC,stopC;
 double duration;
 bool first = true;
 float obszar = 0.8;
-float minut = 0.15;
+float minut = 5;
 
 struct Jobs
 {
