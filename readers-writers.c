@@ -9,36 +9,41 @@
 #include <sys/msg.h>
 #include <time.h>
 
-#define MAX 50
-#define uzycie 0
-#define LICZBA_PROCESOW 30
-#define MINIMALNA_LICZBA_KSIAZEK 0
+#define MAX_KSIAZEK 10
+#define MUTEX 0
+#define CZYTELNICY 1
+#define MIEJSCE_NA_POLCE 2
+#define KSIAZEK 3
+#define LICZBA_PROCESOW 10 
 #define ROZMIAR_TABLICY LICZBA_PROCESOW+1
+#define KLUCZ_KOL 4646
+#define KLUCZ_SEM 1443
 
 static struct sembuf buff;
-int shmid1, shmid2, shmid3, semid, msgid;
+int shmid1, shmid2, shmid3, semid, msgid, shmid5;
 pid_t wpid;
 int *buf;
 int *procesy;
 int *tablicaKsiazek;
+int* dane;
 int id;
-struct msgbuf msg, rcv;
+struct msgbuf msg, msg2;
 struct msqid_ds mbuf;
-uint msgg;
+int numberOfBooks;
 
 void pisarz(int);
 void czytelnik(int);
-void czytaj(int);
+void czytaj(int,int);
 void napiszKsiazke(int);
+int findMax(int);
 void relaks();
-void wyswietl();
-void rejestrCzytelnicy(int);
-bool rejestrPisarz(int);
+void odczyt();
+int rejestrCzytelnicy(int);
 int rejestrCzytelnik(int);
 
-void podnies(int semid, int semnum){
+void V(int semnum, int wartosc){
    buff.sem_num = semnum;
-   buff.sem_op = 1;
+   buff.sem_op = wartosc;
    buff.sem_flg = 0;
    if (semop(semid, &buff, 1) == -1){
       perror("Podnoszenie semafora");
@@ -46,22 +51,17 @@ void podnies(int semid, int semnum){
    }
 }
 
-void opusc(int semid, int semnum){
+void P(int semnum, int wartosc){
    buff.sem_num = semnum;
-   buff.sem_op = -1;
-   buff.sem_flg = IPC_NOWAIT;
-   /*if (semop(semid, &buff, 1) == -1){
-      perror("Opuszczenie semafora");
+   buff.sem_op = -wartosc;
+   buff.sem_flg = 0;
+   if (semop(semid, &buff, 1) == -1){
+       perror("Opuszczanie semafora");
       exit(1);
-      }*/
-   if (semop(semid, &buff, 1) == -1)
-     {
-       return;
      }
 }
 
-void fill(int *p, int lP)
-{
+void fill(int *p, int lP){
     int i, j;
     int rows = lP + 1;
     int cols = lP + 1;
@@ -79,163 +79,176 @@ struct msgbuf {
   int mvalue;
 }
 
+main()
+{
+  system("ipcrm -a");
+  wpid = getpid();
+  shmid1 = shmget(43000, sizeof(int), IPC_CREAT|0600);
+  if (shmid1 == -1){
+    perror("Utworzenie segmentu pamieci wspoldzielonej");
+    exit(1);
+  }
+  shmid2 = shmget(44000, ROZMIAR_TABLICY*sizeof(int), IPC_CREAT|0600);
+  if (shmid2 == -1){
+    perror("Utworzenie segmentu pamieci wspoldzielonej");
+    exit(1);
+  }
+  shmid3 = shmget(60000, ROZMIAR_TABLICY*ROZMIAR_TABLICY*sizeof(int), IPC_CREAT|0600);
+  if (shmid3 == -1){
+    perror("Utworzenie segmentu pamieci wspoldzielonej");
+    exit(1);
+  }
+  shmid5 = shmget(43500, 5*sizeof(int), IPC_CREAT|0600);
+  if (shmid5 == -1){
+    perror("Utworzenie segmentu pamieci wspoldzielonej");
+    exit(1);}
+  buf = (int*)shmat(shmid1, NULL, 0);
+  if (buf == NULL){
+  perror("Przylaczenie segmentu pamieci wspoldzielonej1");
+  exit(1);
+  }
+  procesy = (int*)shmat(shmid2, NULL, 0);
+  if (procesy == NULL){
+  perror("Przylaczenie segmentu pamieci wspoldzielonej2");
+  exit(1);
+  }
+  tablicaKsiazek = (int*)shmat(shmid3,NULL,0);
+  if (tablicaKsiazek == NULL){
+  perror("Przylaczenie segmentu pamieci wspoldzielonej3");
+  exit(1);
+  }
+  fill(tablicaKsiazek, ROZMIAR_TABLICY);
+  dane = (int*)shmat(shmid5, NULL,0);
+  if (dane == NULL){
+  perror("Przylaczenie segmentu pamieci wspoldzielonej3");
+  exit(1);}
+  dane[0]=0; dane[1]=0; dane[2]=0; dane[3]=0; dane[4]=0;
 
-  main(){
-#define KLUCZ_KOL 4646
-#define KLUCZ_SEM 34343
-
-    system("ipcrm -a");
-    wpid = getpid();
-    shmid1 = shmget(45281, sizeof(int), IPC_CREAT|0600);
-    if (shmid1 == -1){
-      perror("Utworzenie segmentu pamieci wspoldzielonej");
-      exit(1);
-    }
-    shmid2 = shmget(45981, ROZMIAR_TABLICY*sizeof(int), IPC_CREAT|0600);
-    if (shmid1 == -1){
-      perror("Utworzenie segmentu pamieci wspoldzielonej");
-      exit(1);
-    }
-    shmid3 = shmget(48281, ROZMIAR_TABLICY*sizeof(int), IPC_CREAT|0600);
-    if (shmid1 == -1){
-      perror("Utworzenie segmentu pamieci wspoldzielonej");
-      exit(1);
-    }
-
-    
-    buf = (int*)shmat(shmid1, NULL, 0);
-    if (buf == NULL){
-      perror("Przylaczenie segmentu pamieci wspoldzielonej1");
-      exit(1);
-    }
-
-    procesy = (int*)shmat(shmid2, NULL, 0);
-    if (procesy == NULL){
-      perror("Przylaczenie segmentu pamieci wspoldzielonej2");
-      exit(1);
-    }
-
-    tablicaKsiazek = (int*)shmat(shmid3,NULL,0);
-    if (tablicaKsiazek == NULL){
-      perror("Przylaczenie segmentu pamieci wspoldzielonej3");
-      exit(1);
-    }
-    fill(tablicaKsiazek, ROZMIAR_TABLICY);
-  
-    msgid = msgget(KLUCZ_KOL, IPC_CREAT|0600);
-    if (msgid == -1){
-      perror("Utworzenie kolejki komunikatow");
-      exit(1);
-    }
-    else
-      { printf("ID kolejki: %d\n", msgid);}
-
-    msgctl(msgid, IPC_STAT, &mbuf);
-    msgg = (uint)(mbuf.msg_qnum);
-    semid = semget(KLUCZ_SEM, 1, IPC_CREAT|0600);
-    if (semid == -1){
-      perror("Utworzenie tablicy semaforow");
-      exit(1);
-    }
-    else{
-      if (semctl(semid, 0, SETVAL, (int)1) == -1){ //do nieprzerywania zapisu, uzycie
-	perror("Nadanie wartosci semaforowi 0");
-	exit(1);
+  msgid = msgget(KLUCZ_KOL, IPC_CREAT|0600);
+  if (msgid == -1){
+  perror("Utworzenie kolejki komunikatow");
+  exit(1);}
+  else
+  { printf("ID kolejki: %d\n", msgid);}
+  msgctl(msgid, IPC_STAT, &mbuf);
+  numberOfBooks = (int)(mbuf.msg_qnum);
+  semid = semget(KLUCZ_SEM, 4, IPC_CREAT|0600);
+  if (semid == -1){
+  perror("Utworzenie tablicy semaforow");
+  exit(1);}
+  else{
+  if (semctl(semid, 0, SETVAL, (int)1) == -1){ // MUTEX
+  perror("Nadanie wartosci semaforowi 0");
+  exit(1);}
+  if (semctl(semid, 1, SETVAL, (int)MAX_KSIAZEK) == -1){ // CZYTELNICY
+  perror("Nadanie wartosci semaforowi 1");
+  exit(1);}
+  if (semctl(semid, 2, SETVAL, (int)MAX_KSIAZEK) == -1){ // MIEJSC_NA_POLCE
+  perror("Nadanie wartosci semaforowi 2");
+  exit(1);}
+  if (semctl(semid, 3, SETVAL, (int)0) == -1){ // KSIAZEK
+  perror("Nadanie wartosci semaforowi 3");
+  exit(1);}
+  }
+  srand(time(NULL));
+  for(int j=1;j<=LICZBA_PROCESOW;j++)
+  {
+  switch(fork())
+  {
+  case -1: 
+  perror("Blad utworzenia procesu potomnego");
+  break;
+  case 0:
+  shmat(shmid1,getpid(),SHM_RND);
+  shmat(shmid2,getpid(),SHM_RND);
+  shmat(shmid3,getpid(),SHM_RND);
+  shmat(shmid5,getpid(),SHM_RND);
+  id = j;
+  while(true){
+    int rand_val1, rand_val2;
+    rand_val1 = (rand()%1000)/(id);
+    if(rand_val1%2==0){
+      rand_val2 = (rand()%1000)/(id+1);
+      if(rand_val2%2==0){
+        procesy[id]=1;
+        sleep(1);
+        pisarz(id);}
+      else{
+      procesy[id]=2;
+      sleep(2);
+      czytelnik(id);
       }
     }
-    srand(time(NULL));
-    for(int j=0;j<LICZBA_PROCESOW;j++)
-      {
-	switch(fork())
-	  {
-	  case -1: 
-	    perror("Blad utworzenia procesu potomnego");
-	    break;
-	  case 0:
-	    shmat(shmid1,getpid(),SHM_RND);
-	    shmat(shmid2,getpid(),SHM_RND);
-	    shmat(shmid3,getpid(),SHM_RND);
-	    id = j+1;
-	    while(true){
-	      int rand_val1, rand_val2;
-	      rand_val1 = (rand()%1000)/(id);
-	      if(rand_val1%2==0){
-	
-		rand_val2 = (rand()%1000)/(id+1);
-		if(rand_val2%2==0)
-		  {
-		    procesy[id]=1;
-		    printf("pisarz id %d\n", id);
-		    wyswietl();
-		    pisarz(id);
-		  }
-		else
-		  {
-		    procesy[id]=2;
-		    printf("czytelnik id %d\n", id);
-		    //wyswietl();
-		    czytelnik(id);
-		  }
-	      }
-	      else
-		{
-		  procesy[id]=0;
-		  printf("relaks id %d\n", id);
-		  //wyswietl();
-		  relaks();
-		}
-	      
-	    } //end while
-	    exit(0);
-	  } // end switch
-	
-      } // end for
-    while( ( wpid = wait(0)) > 0);
+    else
+    {
+      sleep(1);
+      procesy[id]=0;
+      relaks();}
+    } 
+  exit(0);
   }
-
-// buf[0] - wartosc elementu, buf[1] - ilość książek, buf[2] - ilość pisarzy, buf[3] - ilość czytelników
-
-void wyswietl()
-{
-  opusc(semid, uzycie);
-  system("clear");
-  printf("\n");
-  for (int i = 1; i < ROZMIAR_TABLICY; i++) {
-    for (int j = 1; j < ROZMIAR_TABLICY; j++) {
-      printf("%d ", *(tablicaKsiazek + i * ROZMIAR_TABLICY + j));
-    }
-  printf("\n");
   }
-  podnies(semid, uzycie);
+  odczyt();
+  while( ( wpid = wait(0)) > 0);
 }
 
-void rejestrCzytelnicy(int id)
+void odczyt(){
+  P(MUTEX,1);
+  msgctl(msgid, IPC_STAT, &mbuf);
+  int numberOfBooks = (int)(mbuf.msg_qnum);
+  if ((dane[3]==LICZBA_PROCESOW)&&(numberOfBooks==MAX_KSIAZEK))
+  {
+    printf("\t \t \t \t \t \t \t ZAKLESZCZENIE \n");
+  }
+  if ((dane[4]==LICZBA_PROCESOW)&&(numberOfBooks==0))
+  {
+    printf("\t \t \t \t \t \t \t ZAKLESZCZENIE \n");
+  }
+  if ((dane[0]!=0)&&(numberOfBooks==0))
+  {
+    printf("\t \t \t \t \t \t \t ZAKLESZCZENIE \n");
+  }
+  printf("Czytelników(czytelnia): %d \t Pisarzy(czytelnia): %d \t Czytelników(czytelnia+oczekiwanie): %d \t Pisarzy(czytelnia+oczekiwanie): %d \t Relaks: %d \t Książek: %d \n", dane[0], dane[1], dane[4], dane[3], dane[2], numberOfBooks);
+
+  V(MUTEX,1);
+}
+
+int findMax(int id)
 {
-  for(int i=0; i<ROZMIAR_TABLICY; i++)
+  int temp = 0;
+  int max = 0;
+  for(int i=1; i<ROZMIAR_TABLICY; i++)
+    {
+	    temp = *(tablicaKsiazek + id*ROZMIAR_TABLICY + i);
+      if (temp>max)
+      {
+        max = temp;
+      }
+    }
+  return max;
+}
+
+int rejestrCzytelnicy(int id) // przypisuje kto musi przeczytać daną książkę
+{
+  int ileOsobMusiPrzeczytac = 0;
+  for(int i=1; i<ROZMIAR_TABLICY; i++)
     {
       if(procesy[i]==2)
-	{
-	  *(tablicaKsiazek + i*ROZMIAR_TABLICY + id)=1; // set to all people in library this book
-	}
+	    {
+	      *(tablicaKsiazek + id*ROZMIAR_TABLICY + i)+=1; // set to all people in library this book
+        ileOsobMusiPrzeczytac += 1;
+	    }
     }
-}
 
-bool rejestrPisarz(int id)
-{
-  for(int i=0; i<ROZMIAR_TABLICY; i++)
-    {
-      if(*(tablicaKsiazek + i*ROZMIAR_TABLICY + id)==1) // if he has got some unread book
-	return false;
-    }
-  return true; // if he hasn't
+  return ileOsobMusiPrzeczytac;
 }
 
 int rejestrCzytelnik(int id)
 {
-  for(int i=0; i<ROZMIAR_TABLICY; i++)
+  for(int i=1; i<ROZMIAR_TABLICY; i++)
     {
-      if(*(tablicaKsiazek + id*ROZMIAR_TABLICY + i)==1){ // if reader must read some book, we return the type
-	*(tablicaKsiazek + id*ROZMIAR_TABLICY + i) = 0;
+      if(*(tablicaKsiazek + i*ROZMIAR_TABLICY + id)!=0){ // if reader must read some book, we return the type
+        *(tablicaKsiazek + i*ROZMIAR_TABLICY + id)-=1;
 	return i;}
     }
   return 0; // first type
@@ -243,79 +256,122 @@ int rejestrCzytelnik(int id)
 
 void relaks()
 {
-  int czas_relaksu=rand()%30;
+  dane[2]+=1;
+  odczyt();
+  int czas_relaksu=rand()%3;
   sleep(czas_relaksu);
+  dane[2]-=1;
 }
 
-void czytaj(int id)
+void czytajPis(int id)
 {
-  
-  opusc(semid,uzycie);
   msgctl(msgid, IPC_STAT, &mbuf);
-  msgg = (uint)(mbuf.msg_qnum);
-  if(msgg<(MINIMALNA_LICZBA_KSIAZEK+1))
+  numberOfBooks = (int)(mbuf.msg_qnum);
+  if(numberOfBooks==0) // pisarz - gdy nie ma co czytać to może nic nie czytać
+  {
+    return;
+  }
+  else{
+    P(KSIAZEK,1);
+    int doPrzeczytania = rejestrCzytelnik(id); // typ wiadomości tj. indeks autora
+    msgrcv(msgid,&msg, sizeof(msg.mvalue),doPrzeczytania,0);
+    msg2.mtype = msg.mtype;
+    if (doPrzeczytania==0)
+  {
+    msg2.mvalue = msg.mvalue;
+    msgsnd(msgid,&msg2,sizeof(msg2.mvalue),0);
+    V(KSIAZEK,1); // oddaję książkę
+  }
+  else{
+    msg2.mvalue = msg.mvalue - 1; // bo już jedna osoba mniej musi daną książkę przeczytać
+    if (msg2.mvalue==0)
     {
-      podnies(semid,uzycie);
-      return;
+      V(MIEJSCE_NA_POLCE,1); // już nie dodamy tej książki ponownie
     }
-  int doPrzeczytania = rejestrCzytelnik(id); // typ wiadomości tj. indeks autora
-  msgrcv(msgid,&msg, sizeof(msg.mvalue),doPrzeczytania,IPC_NOWAIT);
-  printf("Odczyt: %d\n", msg.mvalue);
-  msg.mtype = doPrzeczytania;
-  msgsnd(msgid,&msg,sizeof(msg.mvalue),0);
-  msgctl(msgid, IPC_STAT, &mbuf);
-  msgg = (uint)(mbuf.msg_qnum);
-  printf("Aktualna ilosc ksiazek: %d\n", msgg);
-  podnies(semid,uzycie);
-
-  int czas_czytania = rand()%15;
+    else{
+    msgsnd(msgid,&msg2,sizeof(msg2.mvalue),0);
+    V(KSIAZEK,1);
+    }
+    }
+  }
+  int czas_czytania = rand()%5;
   sleep(czas_czytania);
-  
 }
 
-void napiszKsiazke(int id)
+void czytajCzyt(int id)
+{
+  // czytanie
+  int czas_czytania = rand()%5;
+  sleep(czas_czytania);
+  // czytanie
+  P(MUTEX,1);
+  int doPrzeczytania = rejestrCzytelnik(id); // typ wiadomości tj. indeks autora
+  msgrcv(msgid,&msg, sizeof(msg.mvalue),doPrzeczytania,0);
+  msg2.mtype = msg.mtype;
+  if (doPrzeczytania==0)
+  {
+    msg2.mvalue = msg.mvalue;
+    msgsnd(msgid,&msg2,sizeof(msg2.mvalue),0);
+    V(KSIAZEK,1); // oddaję książkę
+  }
+  else{
+    msg2.mvalue = msg.mvalue - 1; // bo już jedna osoba mniej musi daną książkę przeczytać
+    if (msg2.mvalue==0)
+    {
+      V(MIEJSCE_NA_POLCE,1); // już nie dodamy tej książki ponownie
+    }
+    else{
+    msgsnd(msgid,&msg2,sizeof(msg2.mvalue),0);
+    V(KSIAZEK,1);
+    }
+  }
+  V(MUTEX,1);
+}
+
+void dodajKsiazke(int id)
 {
   int autor = id;
-  
-  opusc(semid,uzycie);
-  msgctl(msgid, IPC_STAT, &mbuf);
-  msgg = (uint)(mbuf.msg_qnum);
-  if(msgg==MAX)
-    {
-      podnies(semid,uzycie);
-      return;
-    }
-  if(!rejestrPisarz(autor))
-    {
-      podnies(semid,uzycie);
-      return;
-    }
-  msgrcv(msgid,&msg, sizeof(msg.mvalue),id,IPC_NOWAIT); // delete old one
+  int wiadomosc = rejestrCzytelnicy(autor);
   msg.mtype = autor;
-  msg.mvalue = buf[0];
+  msg.mvalue = wiadomosc;  // traścią wiadomości jest ile osób musi przeczytać tą książkę
   msgsnd(msgid,&msg,sizeof(msg.mvalue),0);
-  printf("Zapis %d\n", buf[0]);
-  //buf[0] = (*buf+1)%MAX;
-  buf[0]=11;
-  rejestrCzytelnicy(autor);
-  msgctl(msgid, IPC_STAT, &mbuf);
-  msgg = (uint)(mbuf.msg_qnum);
-  printf("Aktualna ilosc ksiazek: %d\n", msgg);
-  podnies(semid,uzycie);
-
-  int czas_pisania = rand()%10;
-  sleep(czas_pisania);
+  V(KSIAZEK,1);
 }
+
 void pisarz(int id)
 {
-    czytaj(id);
-    napiszKsiazke(id);
+  dane[3]+=1;
+  odczyt();
+  P(MIEJSCE_NA_POLCE, 1);
+  P(CZYTELNICY,LICZBA_PROCESOW);
+  dane[1]+=1;
+  // w czytelni
+  czytajPis(id);
+  int czas_pisania = rand()%5;
+  sleep(czas_pisania);
+  dodajKsiazke(id);
+  dane[1]-=1;
+  // w czytelni
+  odczyt();
+  V(CZYTELNICY,LICZBA_PROCESOW);
+  dane[3]-=1;  
 }
 
 void czytelnik(int id)
 {
-  
-    czytaj(id);
+  dane[4]+=1;
+  P(KSIAZEK,1);
+  V(KSIAZEK,1);
+  P(CZYTELNICY, 1);
+  P(KSIAZEK,1);
+  dane[0]+=1;
+  // w czytelni
+  czytajCzyt(id);
+  //w czytelni
+  dane[0]-=1;
+  odczyt();
+  V(CZYTELNICY, 1);
+  dane[4]-=1;
 }
 
 
