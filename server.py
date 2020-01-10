@@ -27,9 +27,58 @@ def add_temp_result (date_time, value):
     cursor.execute(my_insert, my_data)
     conn.commit()
 
-def day_max():
-    
-    
+# number: for max -> 1, avg -> 0, min -> -1
+def day_results(number):
+    if number==1:
+        cursor.execute(""" select max(wartosc) from temp_res where strftime('%d', data) = strftime('%d', 'now')""");
+    elif number==0:
+        cursor.execute(""" select avg(wartosc) from temp_res where strftime('%d', data) = strftime('%d', 'now')""");
+    elif number==-1:
+        cursor.execute(""" select min(wartosc) from temp_res where strftime('%d', data) = strftime('%d', 'now')""");
+
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
+        
+def month_results(number):
+    if number==1:
+        cursor.execute(""" select max(wartosc) from temp_res where strftime('%m', data) = strftime('%m', 'now')""");
+    elif number==0:
+        cursor.execute(""" select avg(wartosc) from temp_res where strftime('%m', data) = strftime('%m', 'now')""");
+    elif number==-1:
+        cursor.execute(""" select min(wartosc) from temp_res where strftime('%m', data) = strftime('%m', 'now')""");
+
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
+        
+def week_results(number):
+    if number==1:
+        cursor.execute(""" select max(wartosc) from temp_res where strftime('%W', data) = strftime('%W', 'now')""");
+    elif number==0:
+        cursor.execute(""" select avg(wartosc) from temp_res where strftime('%W', data) = strftime('%W', 'now')""");
+    elif number==-1:
+        cursor.execute(""" select min(wartosc) from temp_res where strftime('%W', data) = strftime('%W', 'now')""");
+
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
+
+print("temperatura dzisiaj: max, avg, min : ")
+day_results(1)
+day_results(0)
+day_results(-1)
+
+print("temperatura w tygodniu: max, avg, min: ")
+week_results(1)
+week_results(0)
+week_results(-1)
+
+print("temperatura w miesiacu: max, avg, min: ")
+month_results(1)
+month_results(0)
+month_results(-1)
+
 while True:
     # Wait for a connection
     print >>sys.stderr, 'waiting for a connection'
