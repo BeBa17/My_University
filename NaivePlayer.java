@@ -13,26 +13,55 @@ import put.ai.games.game.Player;*/
 int N;
 int W = ((N/2) + (((N/2) + 1)/2));
 int D = N/2;
+int S = N - W + 1; // ile jest możliwych ułożeń W-pionków pod rząd w jednej kolumnie/rzędzie
+
+public boolean checkField(x, y, what_i_check){
+    /*
+        if(field(x,y) == what_i_check)
+        return true
+     */
+}
+
+public boolean checkRow(x1, y1, deng_or_poss){
+    // sprawdzam wiersz o podanym wierzchołku początkowym (x1, y1) i długości=W
+        /*
+        Jesli checkForDanger -> deng_or_poss = 0;
+        Jesli checkForPossibility -> deng_or_poss = 1;
+
+
+         */
+        int what_check_firstly = (deng_or_poss + 1)%2;
+        for(x=x1; x<(x1+W); x++){
+            checkField(x, y1, what_check_firstly);
+            // jesli min 1xTRUE to oznacz brak deng_or_poss;
+            // możemy zwrócić false;
+            // dodatkow cały czas zliczamy czy zbierzemy min Wxdeng_or_poss
+            // wowczas wystapilo deng_or_poss i zwracamy true
+        }
+
+}
 
 public boolean checkForDanger(){
-    for(int i=0; i<D; i++){
+    for(int shift=0; shift<S; shift++){
         for(int r=0; r<N; r++){
-            checkRow(0);
+            // check Row
+            checkRow(shift, r, 0);
         }
         for(int c=0; c<N; c++){
-            checkColumn(0);
+            // check Column
+            checkColumn(c, shift, 0);
         }
     }
 
 }
 
 public boolean checkForPossibility(){
-    for(int i=0; i<D; i++){
+    for(int i=0; i<N; i++){
         for(int r=0; r<N; r++){
-            checkRow(1);
+            checkRow(shift, r, 1);
         }
         for(int c=0; c<N; c++){
-            checkColumn(1);
+            checkColumn(c, shift, 1);
         }
     }
 }
