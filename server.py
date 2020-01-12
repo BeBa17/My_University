@@ -2,14 +2,91 @@ import socket
 import sys
 import sqlite3
 import datetime
+import select
+from tkinter import*
+
+def send_data():
+	prev_text = regulate_entry.get()
+	connection.sendall(prev_text.encode())
+	print('wysylam nowa temp regulacji', prev_text, file=sys.stderr)
+
+top = Tk()
+
+top.title("SmartVents Control Panel")
+
+curr_temp = Label(top, text="Aktualna", relief = GROOVE, width = 24)
+curr_temp_val = Label(top, text="0")
+
+max_temp_td = Label(top, text="Maksymalna dzisiaj", relief = GROOVE, width = 24)
+max_temp_td_val = Label(top, text="0")
+
+min_temp_td = Label(top, text="Minimalna dzisiaj", relief = GROOVE, width = 24)
+min_temp_td_val = Label(top, text="0")
+
+regulate = Label(top, text="Regulacja", relief = GROOVE, width = 24)
+regulate_entry = Entry(top)
+send_button = Button(top, text="Zmien", command=send_data)
+
+min_temp_week = Label(top, text="Minimalna tydzien", relief = GROOVE, width = 24)
+min_temp_week_val = Label(top, text="0")
+
+max_temp_week = Label(top, text="Maksymalna tydzien", relief = GROOVE, width = 24)
+max_temp_week_val = Label(top, text="0")
+
+avg_temp_week = Label(top, text="Srednia tydzien", relief = GROOVE, width = 24)
+avg_temp_week_val = Label(top, text="0")
+
+min_temp_month = Label(top, text="Minimalna miesiac", relief = GROOVE, width = 24)
+min_temp_month_val = Label(top, text="0")
+
+max_temp_month = Label(top, text="Maksymalna miesiac", relief = GROOVE, width = 24)
+max_temp_month_val = Label(top, text="0")
+
+avg_temp_month = Label(top, text="Srednia miesiac", relief = GROOVE, width = 24)
+avg_temp_month_val = Label(top, text="0")
+
+
+Label(top, text="Temperatura").grid(column = 2)
+
+curr_temp.grid(row = 2, column = 1)
+curr_temp_val.grid(row = 2, column = 2)
+
+max_temp_td.grid(row = 3, column = 1)
+max_temp_td_val.grid(row = 3, column = 2)
+
+min_temp_td.grid(row = 4, column = 1)
+min_temp_td_val.grid(row = 4, column = 2)
+
+regulate.grid(row = 5, column = 1)
+regulate_entry.grid(row = 5, column = 2)
+send_button.grid(row = 5, column = 3)
+
+min_temp_week.grid(row = 6, column = 1)
+min_temp_week_val.grid(row = 6, column = 2)
+
+avg_temp_week.grid(row = 7, column = 1)
+avg_temp_week_val.grid(row = 7, column = 2)
+
+max_temp_week.grid(row = 8, column = 1)
+max_temp_week_val.grid(row = 8, column = 2)
+
+min_temp_month.grid(row = 9, column = 1)
+min_temp_month_val.grid(row = 9, column = 2)
+
+avg_temp_month.grid(row = 10, column = 1)
+avg_temp_month_val.grid(row = 10, column = 2)
+
+max_temp_month.grid(row = 11, column = 1)
+max_temp_month_val.grid(row = 11, column = 2)
+
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 # Bind the socket to the port
-server_address = ('192.168.1.2', 10000)
-print >>sys.stderr, 'starting up on %s port %s' % server_address
+server_address = ('localhost', 10000)
+print('starting up on', server_address[0], 'port', server_address[1], file=sys.stderr)
 sock.bind(server_address)
 
 # Listen for incoming connections
@@ -37,8 +114,7 @@ def day_results(number):
         cursor.execute(""" select min(wartosc) from temp_res where strftime('%d', data) = strftime('%d', 'now')""");
 
     rows = cursor.fetchall()
-    for row in rows:
-        print(row)
+    return rows[0]
         
 def month_results(number):
     if number==1:
@@ -49,8 +125,7 @@ def month_results(number):
         cursor.execute(""" select min(wartosc) from temp_res where strftime('%m', data) = strftime('%m', 'now')""");
 
     rows = cursor.fetchall()
-    for row in rows:
-        print(row)
+    return rows[0]
         
 def week_results(number):
     if number==1:
@@ -61,44 +136,42 @@ def week_results(number):
         cursor.execute(""" select min(wartosc) from temp_res where strftime('%W', data) = strftime('%W', 'now')""");
 
     rows = cursor.fetchall()
-    for row in rows:
-        print(row)
+    return rows[0]
 
-print("temperatura dzisiaj: max, avg, min : ")
-day_results(1)
-day_results(0)
-day_results(-1)
 
-print("temperatura w tygodniu: max, avg, min: ")
-week_results(1)
-week_results(0)
-week_results(-1)
 
-print("temperatura w miesiacu: max, avg, min: ")
-month_results(1)
-month_results(0)
-month_results(-1)
+# Wait for a connection
+print('waiting for a connection', file=sys.stderr)
+connection, client_address = sock.accept()
+sock.settimeout(0.01)
 
-while True:
-    # Wait for a connection
-    print >>sys.stderr, 'waiting for a connection'
-    connection, client_address = sock.accept()
+print('connection from', client_address, file=sys.stderr)
 
-    try:
-        print >>sys.stderr, 'connection from', client_address
+def myupdate(data):
+	if data:
+		curr_temp_val.config(text=data)
+	max_temp_td_val.config(text=day_results(1))
+	min_temp_td_val.config(text=day_results(-1))
+	min_temp_week_val.config(text=week_results(-1))
+	max_temp_week_val.config(text=week_results(1))
+	avg_temp_week_val.config(text=week_results(0))
+	min_temp_month_val.config(text=month_results(-1))
+	max_temp_month_val.config(text=month_results(1))
+	avg_temp_month_val.config(text=month_results(0))
 
-        # Receive the data in small chunks and retransmit it
-        while True:
-            data = connection.recv(64)
-            print >>sys.stderr, 'received "%s"' % data
-            if data:
-                print >>sys.stderr, 'sending data back to the client'
-                add_temp_result(datetime.datetime.now(), data)
-                connection.sendall(data)
-            else:
-                print >>sys.stderr, 'no more data from', client_address
-                break
-            
-    finally:
-        # Clean up the connection
-        connection.close()
+def servloop():
+	data = ""
+	data = connection.recv(64).decode()
+	connection.sendall("gotit".encode())
+	if data:
+		print('received', data, file=sys.stderr)
+		print('sending data back to the client', file=sys.stderr)
+		add_temp_result(datetime.datetime.now(), data)
+		top.after(1, myupdate, data)
+		
+	top.after(10,servloop)
+
+
+top.after(1, servloop)
+
+top.mainloop()
