@@ -3,15 +3,18 @@ import sys
 import sqlite3
 import datetime
 import select
+import threading
 from tkinter import*
 
 regulate_temp_var = 21
 
-def send_data(liczba):
-    regulate_temp_var = liczba
+def send_data():
+    global regulate_temp_var
+    regulate_temp_var = float(regulate_entry.get())
+
 	#prev_text = regulate_entry.get()
 	#connection.sendall(prev_text.encode())
-	#print('wysylam nowa temp regulacji', prev_text, file=sys.stderr)
+    print('wysylam nowa temp regulacji', regulate_temp_var, file=sys.stderr)
 
 top = Tk()
 
@@ -88,7 +91,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
 # Bind the socket to the port
-server_address = ('localhost', 10000)
+server_address = ('192.168.43.2', 10000)
 print('starting up on', server_address[0], 'port', server_address[1], file=sys.stderr)
 sock.bind(server_address)
 
@@ -110,43 +113,43 @@ def add_temp_result (date_time, value):
 # number: for max -> 1, avg -> 0, min -> -1
 def day_results(number):
     if number==1:
-        cursor.execute(""" select max(wartosc) from temp_res where strftime('%d', data) = strftime('%d', 'now')""");
+        cursor.execute(""" select max(wartosc) from temp_res where strftime('%d', data) = strftime('%d', 'now')""")
     elif number==0:
-        cursor.execute(""" select avg(wartosc) from temp_res where strftime('%d', data) = strftime('%d', 'now')""");
+        cursor.execute(""" select avg(wartosc) from temp_res where strftime('%d', data) = strftime('%d', 'now')""")
     elif number==-1:
-        cursor.execute(""" select min(wartosc) from temp_res where strftime('%d', data) = strftime('%d', 'now')""");
+        cursor.execute(""" select min(wartosc) from temp_res where strftime('%d', data) = strftime('%d', 'now')""")
 
     rows = cursor.fetchall()
-    return rows[0]
+    return round(rows[0][0], 2)
         
 def month_results(number):
     if number==1:
-        cursor.execute(""" select max(wartosc) from temp_res where strftime('%m', data) = strftime('%m', 'now')""");
+        cursor.execute(""" select max(wartosc) from temp_res where strftime('%m', data) = strftime('%m', 'now')""")
     elif number==0:
-        cursor.execute(""" select avg(wartosc) from temp_res where strftime('%m', data) = strftime('%m', 'now')""");
+        cursor.execute(""" select avg(wartosc) from temp_res where strftime('%m', data) = strftime('%m', 'now')""")
     elif number==-1:
-        cursor.execute(""" select min(wartosc) from temp_res where strftime('%m', data) = strftime('%m', 'now')""");
+        cursor.execute(""" select min(wartosc) from temp_res where strftime('%m', data) = strftime('%m', 'now')""")
 
     rows = cursor.fetchall()
-    return rows[0]
+    return round(rows[0][0], 2)
         
 def week_results(number):
     if number==1:
-        cursor.execute(""" select max(wartosc) from temp_res where strftime('%W', data) = strftime('%W', 'now')""");
+        cursor.execute(""" select max(wartosc) from temp_res where strftime('%W', data) = strftime('%W', 'now')""")
     elif number==0:
-        cursor.execute(""" select avg(wartosc) from temp_res where strftime('%W', data) = strftime('%W', 'now')""");
+        cursor.execute(""" select avg(wartosc) from temp_res where strftime('%W', data) = strftime('%W', 'now')""")
     elif number==-1:
-        cursor.execute(""" select min(wartosc) from temp_res where strftime('%W', data) = strftime('%W', 'now')""");
+        cursor.execute(""" select min(wartosc) from temp_res where strftime('%W', data) = strftime('%W', 'now')""")
 
     rows = cursor.fetchall()
-    return rows[0]
+    return round(rows[0][0], 2)
 
 
 
 # Wait for a connection
 print('waiting for a connection', file=sys.stderr)
+print(week_results(1))
 connection, client_address = sock.accept()
-sock.settimeout(0.01)
 
 print('connection from', client_address, file=sys.stderr)
 
@@ -163,17 +166,21 @@ def myupdate(data):
 	avg_temp_month_val.config(text=month_results(0))
 
 def servloop():
+	readable, writable, _ = select.select([connection], [], [])
 	data = ""
-	data = connection.recv(64).decode()
-	connection.sendall(str(regulate_temp_var).encode())
+	if readable != []:
+		mlength = connection.recv(1)
+		mlength = mlength.decode()
+		data = connection.recv(int(mlength))
+		data = data.decode()
+		connection.sendall(str(regulate_temp_var).encode())
+		print('wysylam', regulate_temp_var)
 	if data:
 		print('received', data, file=sys.stderr)
-		print('adding result to database', file=sys.stderr)
+		#print('adding result to database', file=sys.stderr)
 		add_temp_result(datetime.datetime.now(), data)
 		top.after(1, myupdate, data)
-		
-	top.after(10,servloop)
-
+	top.after(20, servloop)
 
 top.after(1, servloop)
 
