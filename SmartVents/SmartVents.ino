@@ -26,11 +26,12 @@ IPAddress server(192,168,43,2);
 
 WiFiClient client;
 
-OneWire onewire(ONEWIRE_PIN);
+/*OneWire onewire(ONEWIRE_PIN);
 DS18B20 sensors(&onewire);
-Servo servo;
+Servo servo;*/
 
 float temperature = 0.0;
+float regulation_temperature = 21.43;
 int pos = 0;
 
 void setup() {
@@ -57,22 +58,20 @@ void setup() {
   // if you get a connection, report back via serial:
   if (client.connect(server, 10000)) {
     Serial.println("Polaczono z serwerem");
-    // Wyslij przykladowa wiadomosc
-    client.print("Witaj");
   }
 
   
-  sensors.begin();
+  /*sensors.begin();
   sensors.request(address);
 
   servo.attach(SERVO_PIN);
   servo.write(pos);
-  delay(500);
+  delay(500);*/
 }
 
 void loop() {
   // Obsluga czujnika
-  if (sensors.available())
+  /*if (sensors.available())
   {
     temperature = sensors.readTemperature(address);
 
@@ -81,10 +80,15 @@ void loop() {
     Serial.println(F(" 'C"));
 
     sensors.request(address);
-  }
+  }*/
+  temperature = 25.58;
+  
+  Serial.print(temperature);
+  client.print(String(String(temperature).length())+String(temperature));
+  Serial.println(F(" 'C"));
 
   // Obsluga serwa
-  if (temperature > 22.0 && pos == 0)
+  /*if (temperature > 22.0 && pos == 0)
   {
     Serial.println("Temperature over 22. Rotating...");
     for (; pos <= 90; pos+=5) {
@@ -94,9 +98,9 @@ void loop() {
       delay(50);
     }
     pos -= 5;
-  }
+  }*/
 
-  if (temperature <= 22.0 && pos == 90)
+  /*if (temperature <= 22.0 && pos == 90)
   {
     Serial.println("Temperature below 22. Rotating...");
     for (; pos >= 0; pos -= 5) {
@@ -106,15 +110,19 @@ void loop() {
       delay(30);
     }
     pos += 5;
-  }
+  }*/
 
   // Obsluga sieci
+  String temp = "";
   while (client.available()) {
-    String c = client.read();
-    temperature = c.toFloat();
+    char c = client.read();
+    temp = temp + c;
     Serial.write("Otrzymano ");
     Serial.write(c);
   }
+  regulation_temperature = temp.toFloat();
+  
+  delay(20);
 
   // if the server's disconnected, stop the client:
   if (!client.connected()) {
