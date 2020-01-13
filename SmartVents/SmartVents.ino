@@ -103,14 +103,16 @@ void loop() {
       servo.write(pos);
       Serial.print(pos);
       Serial.print(" ");
-      delay(50);
+      delay(30);
     }
     pos += 5;
   }
 
   // Obsluga sieci
   while (client.available()) {
-    char c = client.read();
+    String c = client.read();
+    temperature = c.toFloat();
+    Serial.write("Otrzymano ");
     Serial.write(c);
   }
 

@@ -5,10 +5,13 @@ import datetime
 import select
 from tkinter import*
 
-def send_data():
-	prev_text = regulate_entry.get()
-	connection.sendall(prev_text.encode())
-	print('wysylam nowa temp regulacji', prev_text, file=sys.stderr)
+regulate_temp_var = 21
+
+def send_data(liczba):
+    regulate_temp_var = liczba
+	#prev_text = regulate_entry.get()
+	#connection.sendall(prev_text.encode())
+	#print('wysylam nowa temp regulacji', prev_text, file=sys.stderr)
 
 top = Tk()
 
@@ -162,10 +165,10 @@ def myupdate(data):
 def servloop():
 	data = ""
 	data = connection.recv(64).decode()
-	connection.sendall("gotit".encode())
+	connection.sendall(str(regulate_temp_var).encode())
 	if data:
 		print('received', data, file=sys.stderr)
-		print('sending data back to the client', file=sys.stderr)
+		print('adding result to database', file=sys.stderr)
 		add_temp_result(datetime.datetime.now(), data)
 		top.after(1, myupdate, data)
 		
