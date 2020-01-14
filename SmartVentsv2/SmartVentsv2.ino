@@ -30,9 +30,10 @@ OneWire onewire(ONEWIRE_PIN);
 DS18B20 sensors(&onewire);
 Servo servo;
 
-float temperature = 0.0;
+float temperature = 20.00;
 float regulation_temperature = 21.43;
 int pos = 0;
+String temp = "";
 
 void setup() {
   while(!Serial);
@@ -75,23 +76,26 @@ void loop() {
   {
     temperature = sensors.readTemperature(address);
 
+    Serial.print("temperatura ");
     Serial.print(temperature);
-    client.print(String(temperature));
+    int num = client.print(String(temperature));
     Serial.println(F(" 'C"));
+    Serial.print("ilosc znakow ");
+    Serial.println(String(num));
 
     sensors.request(address);
   }
   /*temperature = 25.58;*/
   
-  Serial.print(temperature);
-  Serial.println(F(" 'C"));
+  //Serial.print(temperature);
+  //Serial.println(F(" 'C"));
   /*Wysylamy ilosc bajtow do odebrania przed temperatura*/
-  client.print(String(String(temperature).length()) + String(temperature));
+  //client.print(String(temperature));
 
   // Obsluga serwa
-  if (temperature > 22.0 && pos == 0)
+  if (temperature > regulation_temperature && pos == 0)
   {
-    Serial.println("Temperature over 22. Rotating...");
+    Serial.println("Temperature over threshold. Rotating...");
     for (; pos <= 90; pos+=5) {
       servo.write(pos);
       Serial.print(pos);
@@ -101,9 +105,9 @@ void loop() {
     pos -= 5;
   }
 
-  if (temperature <= 22.0 && pos == 90)
+  if (temperature <= regulation_temperature && pos == 90)
   {
-    Serial.println("Temperature below 22. Rotating...");
+    Serial.println("Temperature below threshold. Rotating...");
     for (; pos >= 0; pos -= 5) {
       servo.write(pos);
       Serial.print(pos);
@@ -114,14 +118,24 @@ void loop() {
   }
 
   // Obsluga sieci
-  String temp = "";
+  int start = 0;
+  int iter = 0;
   while (client.available()) {
+    if (iter == 0) temp = "";
+    iter = 1;
     char c = client.read();
-    temp = temp + c;
-    Serial.write("Otrzymano ");
-    Serial.write(c);
+    if (c == 'k') {
+      start = 0;
+      break;
+    }
+    if (start == 1) {
+      temp = temp + c;
+    }
+    if (c == 's') { Serial.write("s"); start = 1; }
   }
+  iter = 0;
   regulation_temperature = temp.toFloat();
+  //rSerial.println(regulation_temperature);
   
   /*delay(20);*/
 
