@@ -4,7 +4,7 @@ import put.ai.games.game.Move;
 import put.ai.games.game.Player;
 import put.ai.games.game.TypicalBoard;
 import put.ai.games.game.moves.RotateMove;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -170,6 +170,8 @@ public class PentagoBoard extends TypicalBoard {
 
     @Override
     protected boolean canMove(Player.Color color) {
-        throw new NotImplementedException();
+
+        // throw new NotImplementedException();
+        return false;
     }
 }

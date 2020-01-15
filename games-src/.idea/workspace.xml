@@ -2,81 +2,17 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="Games:jar" />
+      <artifact name="NaivePlayer:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75a7b501-ac42-42d4-a9a0-8b9b785bc82f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Games_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/Point.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/Board.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/Move.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/Player$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/Player$Color.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/Player.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/TypicalBoard$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/TypicalBoard.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/moves/MoveMove.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/moves/PlaceAndRotateMove.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/moves/PlaceMove.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/moves/RotateMove$Direction.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/moves/RotateMove.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/moves/ShiftMove$Direction.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/moves/ShiftMove.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/moves/SkipMove.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/BoardTestUtils.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/Vector.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/AbstractBoardFactory.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/BoardFactory.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/Callback.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/GameEngine.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/UniversalBoardFactory.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/impl/GameEngineImpl$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/impl/GameEngineImpl$NextMoveJob.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/impl/GameEngineImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/impl/MoveValidator.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/AbstractPlayerLoader.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/FileClassLoader.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/FilePlayerLoader.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/JarPlayerLoader.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/MetaPlayerLoader.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/PlayerLoader.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/PlayerLoadingException.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/parameters/IntegerParameter.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/parameters/Parameter.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/exceptions/CheatingException.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/exceptions/NoMoveException.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/exceptions/RuleViolationException.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/exceptions/TimeoutException.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/AbstractMove.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/MoveMoveImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/PlaceMoveImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/ShiftMoveImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/SkipMoveImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/test-classes/put/ai/games/engine/impl/MoveValidatorTest$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BoardGameEngine/target/test-classes/put/ai/games/engine/impl/MoveValidatorTest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/MrBordello_Strategy_Game_Tileset_2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/MrBordello_Strategy_Game_Tileset_6.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/aries-blue-selected.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/aries-blue.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/aries-red-selected.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/aries-red.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/aries1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/skip.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/source.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/snort/snortgui/images/white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Players/NastyPlayer/target/classes/put/ai/games/nastyplayer/NastyPlayer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Players/NullPlayer/target/classes/put/ai/games/naiveplayer/NullPlayer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tester/target/classes/put/ai/games/tester/Tester$1.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tester/target/classes/put/ai/games/tester/Tester.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tester/target/test-classes/put/ai/games/tester/TesterTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/NaivePlayer_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Players/NaivePlayer/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/artifacts/Games_jar/Games.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/artifacts/NaivePlayer_jar/NaivePlayer.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Players/NaivePlayer/NaivePlayer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Players/NaivePlayer/NaivePlayer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Players/NaivePlayer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Players/NaivePlayer/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Players/NaivePlayer/src/main/java/put/ai/games/naiveplayer/NaivePlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Players/NaivePlayer/src/main/java/put/ai/games/naiveplayer/NaivePlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rules/Pentago/src/main/java/put/ai/games/pentago/impl/PentagoBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rules/Pentago/src/main/java/put/ai/games/pentago/impl/PentagoBoard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,13 +23,16 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1WQhH1vCnbqO0sEpzqll6Qyrmev" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
@@ -126,23 +65,29 @@
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="-1155" y="73" key="#com.intellij.ide.util.MemberChooser" timestamp="1579121269726">
       <screen x="-1920" y="-157" width="1920" height="1040" />
     </state>
     <state x="-1155" y="73" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579121269726" />
-    <state x="-1180" y="118" key="FileChooserDialogImpl" timestamp="1579123278967">
-      <screen x="-1920" y="-157" width="1920" height="1040" />
+    <state x="526" y="193" key="FileChooserDialogImpl" timestamp="1579125362113">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="-1180" y="118" key="FileChooserDialogImpl/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579123278967" />
-    <state x="-1480" y="-62" key="SettingsEditor" timestamp="1579123291136">
-      <screen x="-1920" y="-157" width="1920" height="1040" />
+    <state x="526" y="193" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1579125362113" />
+    <state x="313" y="0" key="SettingsEditor" timestamp="1579125658012">
+      <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="-1480" y="-62" key="SettingsEditor/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579123291136" />
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1579116437952">
+    <state x="313" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1579125658012" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1579125058759">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579116437952" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1579125058759" />
     <state x="-1302" y="-17" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1579122662739">
       <screen x="-1920" y="-157" width="1920" height="1040" />
     </state>
