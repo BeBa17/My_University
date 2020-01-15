@@ -9,6 +9,7 @@ import java.util.Random;
 import put.ai.games.game.Board;
 import put.ai.games.game.Move;
 import put.ai.games.game.Player;
+import put.ai.games.pentago.impl.PentagoMove;
 
 public class NaivePlayer extends Player {
 
@@ -119,14 +120,28 @@ public class NaivePlayer extends Player {
             return number_of_fields;
         }
     }
+    
+    public Move tryToDoAMove(PentagoMove my_move, Board b){
 
-    public void checkSquare(int square, int half_or_all){
+        List<Move> moves = b.getMovesFor(getColor());
+        Move res = moves.get(1);
+        for (Move _m : moves) {
+            PentagoMove possibly_move = (PentagoMove) _m;
+            if(possibly_move.getPlaceX() == my_move.getPlaceX() && possibly_move.getPlaceY() == my_move.getPlaceY())
+                return _m;
+        }
+        return res;
+    }
+
+    public Move checkSquare(int square, int half_or_all, Board b){
+        List<Move> moves = b.getMovesFor(getColor());
+        Move res = moves.get(1);
         // x1 i x2 - wierzchołkowe wartości dla danego (obramowania) kwadratu
         int x2 = N/2 + square;
         int x1 = N/2 - 1 - square;
 
-        int x_to_put_counter;
-        int y_to_put_counter;
+        int x_to_put_counter = 0;
+        int y_to_put_counter = 0;
 
         int number_of_my_counters = 0;
         int number_of_opponents_counters = 0;
@@ -137,19 +152,19 @@ public class NaivePlayer extends Player {
         int required_number_of_my_counters = getRequiredNumberOfMyCounters(number_of_fields, half_or_all);
 
         // przeglądam wszystkie pola w danym (obramowaniu) kwadracie
-        for(int i=x1; i<=x2; i++){
+        for(int i=0; i<=(x2 - 1); i++){
             // czy tu jest mój pionek
             if(checkField(i,x1,1)==true){
                 number_of_my_counters = number_of_my_counters + 1;
                 number_of_counters = number_of_counters + 1;
             }
             // czy tu jest mój pionek
-            if(checkField(x1,i,1)==true){
+            if(checkField(x1,i + 1,1)==true){
                 number_of_my_counters = number_of_my_counters + 1;
                 number_of_counters = number_of_counters + 1;
             }
             // czy tu jest mój pionek
-            if(checkField(i,x2,1)==true){
+            if(checkField(i + 1,x2,1)==true){
                 number_of_my_counters = number_of_my_counters + 1;
                 number_of_counters = number_of_counters + 1;
             }
@@ -165,12 +180,12 @@ public class NaivePlayer extends Player {
                 number_of_counters = number_of_counters + 1;
             }
             //czy tu jest pionek przeciwnika
-            if(checkField(x1,i,0) == true){
+            if(checkField(x1,i + 1,0) == true){
                 number_of_opponents_counters = number_of_opponents_counters + 1;
                 number_of_counters = number_of_counters + 1;
             }
             //czy tu jest pionek przeciwnika
-            if(checkField(i,x2,0) == true){
+            if(checkField(i + 1,x2,0) == true){
                 number_of_opponents_counters = number_of_opponents_counters + 1;
                 number_of_counters = number_of_counters + 1;
             }
@@ -184,11 +199,11 @@ public class NaivePlayer extends Player {
                 x_to_put_counter = i;
                 y_to_put_counter = x1;
             }
-            if(checkField(x1,i,-1) == true){
+            if(checkField(x1,i + 1,-1) == true){
                 x_to_put_counter = x1;
                 y_to_put_counter = i;
             }
-            if(checkField(i,x2,-1) == true){
+            if(checkField(i + 1,x2,-1) == true){
                 x_to_put_counter = i;
                 y_to_put_counter = x2;
             }
@@ -201,33 +216,38 @@ public class NaivePlayer extends Player {
 
         if(number_of_my_counters<required_number_of_my_counters && number_of_fields>number_of_counters){
             // gdzieś tutaj mój postaw pionek
-            // makeAMove(x_to_put_counter, y_to_put_counter);
-            return;
-        }
+            PentagoMove my_move = new PentagoMove(x_to_put_counter, y_to_put_counter, 1, 1, 1, 1, getColor()) ;
+            return tryToDoAMove(my_move, b);
 
+        }
+        return res;
     }
 
-    public void otherStrategy(){
+    public Move otherStrategy(Board b){
+        List<Move> moves = b.getMovesFor(getColor());
+        Move res = moves.get(1);
         for(int i=0; i<D; i++){
             // będę sprawdzać kwadraty od najbardziej wewnętrznego. ;
             // Będzie ich N/2 = D;
             // Drugi argument - czy dopełniam go do połowy (0) czy do całości (1)
-            checkSquare(i, 0);
+            res = checkSquare(i, 0, b);
         }
         for(int i=0; i<D; i++){
-            checkSquare(i, 1);
+            res = checkSquare(i, 1, b);
         }
+
+        return res;
     }
 
-    public void myMove(){
+    public void myMove(Board b){
         if(checkForDanger()==false)
         {
             if(checkForPossibility()==false)
             {
-                otherStrategy();
+                otherStrategy(b);
             }
         }
-
+        return;
     }
 
     @Override
@@ -238,8 +258,9 @@ public class NaivePlayer extends Player {
 
     @Override
     public Move nextMove(Board b) {
-        List<Move> moves = b.getMovesFor(getColor());
-        return moves.get(random.nextInt(moves.size()));
+        return otherStrategy(b);
+        //List<Move> moves = b.getMovesFor(getColor());
+        //return moves.get(random.nextInt(moves.size()));
     }
 }
 
