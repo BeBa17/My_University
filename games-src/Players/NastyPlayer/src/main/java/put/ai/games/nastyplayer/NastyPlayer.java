@@ -22,7 +22,7 @@ public class NastyPlayer extends Player {
         return "Gracz Wredny 84868";
     }
 
-
+    public static void main(String[] args) {}
     @Override
     public Move nextMove(Board b) {
         PrintStream p = null;

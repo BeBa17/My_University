@@ -2,22 +2,72 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="NaivePlayer:jar" />
+      <artifact name="NastyPlayer:jar" />
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75a7b501-ac42-42d4-a9a0-8b9b785bc82f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/NaivePlayer_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Players/NaivePlayer/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/Games_jar/Games.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/artifacts/NaivePlayer_jar/NaivePlayer.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Players/MyPlayer/MyPlayer.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Players/MyPlayer/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Players/MyPlayer/src/main/java/put/ai/games/myplayer/MyPlayer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Players/MyPlayer/target/MyPlayer-2.0-SNAPSHOT.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Players/MyPlayer/target/classes/put/ai/games/myplayer/MyPlayer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Players/MyPlayer/target/maven-archiver/pom.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/artifacts/NastyPlayer_jar/NastyPlayer.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Games_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/NaivePlayer_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rules/Pentago/src/main/java/put/ai/games/pentago/impl/PentagoBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/Rules/Pentago/src/main/java/put/ai/games/pentago/impl/PentagoBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/Point.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/Point.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/Player$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/Player$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/TypicalBoard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/TypicalBoard$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/TypicalBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGame/target/classes/put/ai/games/game/TypicalBoard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/BoardTestUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/BoardTestUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/Vector.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/Vector.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/UniversalBoardFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/UniversalBoardFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/impl/GameEngineImpl$NextMoveJob.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/impl/GameEngineImpl$NextMoveJob.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/impl/GameEngineImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/impl/GameEngineImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/impl/MoveValidator.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/impl/MoveValidator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/AbstractPlayerLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/AbstractPlayerLoader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/FileClassLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/FileClassLoader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/JarPlayerLoader.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/loaders/JarPlayerLoader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/parameters/Parameter.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/engine/parameters/Parameter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/AbstractMove.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/AbstractMove.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/MoveMoveImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/MoveMoveImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/PlaceMoveImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/PlaceMoveImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/ShiftMoveImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/BoardGameEngine/target/classes/put/ai/games/game/moves/impl/ShiftMoveImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLI/target/classes/put/ai/games/cli/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/CLI/target/classes/put/ai/games/cli/App$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLI/target/classes/put/ai/games/cli/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/CLI/target/classes/put/ai/games/cli/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CLI/target/classes/put/ai/games/cli/Wrapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/CLI/target/classes/put/ai/games/cli/Wrapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/ArtificialArtificialIntelligence.class" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/ArtificialArtificialIntelligence.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/BoardViewPanel$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/BoardViewPanel$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/BoardViewPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/BoardViewPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/MainWindow$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/MainWindow$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/MainWindow$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/MainWindow$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/MainWindow$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/MainWindow$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/MainWindow$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/MainWindow$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/MainWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/target/classes/put/ai/games/gui/MainWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Players/NaivePlayer/src/main/java/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Players/NaivePlayer/target/classes/put/ai/games/naiveplayer/NaivePlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Players/NaivePlayer/target/classes/put/ai/games/naiveplayer/NaivePlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Players/NastyPlayer/src/main/java/put/ai/games/nastyplayer/NastyPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Players/NastyPlayer/src/main/java/put/ai/games/nastyplayer/NastyPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Players/NastyPlayer/target/classes/put/ai/games/nastyplayer/NastyPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Players/NastyPlayer/target/classes/put/ai/games/nastyplayer/NastyPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Players/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Players/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rules/Pentago/target/classes/put/ai/games/pentago/impl/PentagoBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/Rules/Pentago/target/classes/put/ai/games/pentago/impl/PentagoBoard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rules/Pentago/target/classes/put/ai/games/pentago/impl/PentagoMove.class" beforeDir="false" afterPath="$PROJECT_DIR$/Rules/Pentago/target/classes/put/ai/games/pentago/impl/PentagoMove.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RulesProvider/target/classes/put/ai/games/rulesprovider/RulesProvider.class" beforeDir="false" afterPath="$PROJECT_DIR$/RulesProvider/target/classes/put/ai/games/rulesprovider/RulesProvider.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tester/target/classes/put/ai/games/tester/Tester$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/Tester/target/classes/put/ai/games/tester/Tester$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tester/target/classes/put/ai/games/tester/Tester.class" beforeDir="false" afterPath="$PROJECT_DIR$/Tester/target/classes/put/ai/games/tester/Tester.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Games_jar/Games.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/NaivePlayer_jar/NaivePlayer.jar" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Games" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -35,10 +85,10 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Players/MyPlayer" />
     <property name="project.structure.last.edited" value="Artifacts" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -73,25 +123,49 @@
       <screen x="-1920" y="-157" width="1920" height="1040" />
     </state>
     <state x="-1155" y="73" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579121269726" />
-    <state x="526" y="193" key="FileChooserDialogImpl" timestamp="1579125362113">
+    <state x="563" y="149" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1579206158922">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="563" y="149" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1366.728@0.0.1366.728" timestamp="1579206158922" />
+    <state x="526" y="193" key="FileChooserDialogImpl" timestamp="1579155477029">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="-1180" y="118" key="FileChooserDialogImpl/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579123278967" />
-    <state x="526" y="193" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1579125362113" />
-    <state x="313" y="0" key="SettingsEditor" timestamp="1579125658012">
+    <state x="526" y="193" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1579155477029" />
+    <state width="1323" height="60" key="GridCell.Tab.0.bottom" timestamp="1579295531536">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="60" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1579295531536" />
+    <state width="1323" height="60" key="GridCell.Tab.0.center" timestamp="1579295531536">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="60" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1579295531536" />
+    <state width="1323" height="60" key="GridCell.Tab.0.left" timestamp="1579295531536">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="60" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1579295531536" />
+    <state width="1323" height="60" key="GridCell.Tab.0.right" timestamp="1579295531536">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="1323" height="60" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1579295531536" />
+    <state x="313" y="0" key="SettingsEditor" timestamp="1579206770691">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="-1480" y="-62" key="SettingsEditor/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579123291136" />
-    <state x="313" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1579125658012" />
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1579125058759">
+    <state x="313" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1579206770691" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1579285891676">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579116437952" />
-    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1579125058759" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1579285891676" />
     <state x="-1302" y="-17" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1579122662739">
       <screen x="-1920" y="-157" width="1920" height="1040" />
     </state>
     <state x="-1302" y="-17" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579122662739" />
+    <state x="65" y="0" key="new project wizard" timestamp="1579155111959">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="65" y="0" key="new project wizard/0.0.1366.728@0.0.1366.728" timestamp="1579155111959" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

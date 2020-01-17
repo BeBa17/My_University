@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="NastyPlayer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/NastyPlayer_jar</output-path>
+    <root id="archive" name="NastyPlayer.jar">
+      <element id="module-output" name="NastyPlayer" />
+      <element id="module-output" name="BoardGame" />
+    </root>
+  </artifact>
+</component>
