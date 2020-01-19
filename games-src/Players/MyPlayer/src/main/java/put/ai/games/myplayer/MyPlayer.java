@@ -123,16 +123,16 @@ public class MyPlayer extends Player {
             return number_of_fields;
         }
     }
-    
-    public Move tryToDoAMove(PentagoMove my_move, Board b){
 
-        List<Move> moves = b.getMovesFor(getColor());
-        for (Move _m : moves) {
-            PentagoMove possibly_move = (PentagoMove) _m;
-            if(possibly_move.getPlaceX() == my_move.getPlaceX())
-                return my_move;
+    // DOBRZE DZIALA
+    public Move tryToDoAMove(PentagoMove my_move, Board b, List<Move> moves){
+
+        for (Move allowed : moves) {
+            PentagoMove possibly_move = (PentagoMove) allowed;
+            if( my_move.getPlaceX() == possibly_move.getPlaceX() &&  my_move.getPlaceY() == possibly_move.getPlaceY() )
+                return possibly_move;
         }
-        return moves.get(8);
+        return moves.get(0);
     }
 
     public Color opponentsColor(){
@@ -147,8 +147,8 @@ public class MyPlayer extends Player {
             return c1;
     }
 
-    public Move checkSquare(int square, int half_or_all, Board b){
-        List<Move> moves = b.getMovesFor(getColor());
+    public Move checkSquare(int square, int half_or_all, Board b, List<Move> moves){
+        //List<Move> moves = b.getMovesFor(getColor());
         Move res = moves.get(7);
         // x1 i x2 - wierzchołkowe wartości dla danego (obramowania) kwadratu
         int x2 = D + square;
@@ -235,7 +235,7 @@ public class MyPlayer extends Player {
         if(number_of_my_counters<required_number_of_my_counters && number_of_fields>number_of_counters){
             // gdzieś tutaj mój postaw pionek
             PentagoMove my_move = new PentagoMove(x_to_put_counter, y_to_put_counter, 1, 1, 1, 5, getColor()) ;
-            return tryToDoAMove(my_move, b);
+            return tryToDoAMove(my_move, b, moves);
             //return moves.get(5);
 
         }
@@ -252,12 +252,12 @@ public class MyPlayer extends Player {
             // będę sprawdzać kwadraty od najbardziej wewnętrznego. ;
             // Będzie ich N/2 = D;
             // Drugi argument - czy dopełniam go do połowy (0) czy do całości (1)
-            res = checkSquare(i, 0, b);
+            res = checkSquare(i, 0, b, moves);
             if(res != result)
                 return res;
         }
         for(int i=0; i<D; i++){
-            res = checkSquare(i, 1, b);
+            res = checkSquare(i, 1, b, moves);
             if(res != result)
                 return res;
         }
@@ -286,6 +286,8 @@ public class MyPlayer extends Player {
     @Override
     public Move nextMove(Board b) {
         return otherStrategy(b);
+        //PentagoMove my_move = new PentagoMove(1, 1, 1, 3, 1, 1, getColor()) ;
+        //return my_move;
         //List<Move> moves = b.getMovesFor(getColor());
         //return moves.get(random.nextInt(moves.size()));
     }
