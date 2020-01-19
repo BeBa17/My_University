@@ -171,7 +171,7 @@ public class PentagoBoard extends TypicalBoard {
     @Override
     protected boolean canMove(Player.Color color) {
 
-        // throw new NotImplementedException();
+        //throw new NotImplementedException();
         return false;
     }
 }
