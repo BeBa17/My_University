@@ -16,7 +16,7 @@ import put.ai.games.pentago.impl.PentagoMove;
 
 public class MyPlayer extends Player {
 
-    int N;
+    int N = 6;
     int W = ((N/2) + (((N/2) + 1)/2));
     int D = N/2;
     int S = N - W + 1; // ile jest możliwych ułożeń W-pionków pod rząd w jednej kolumnie/rzędzie
@@ -216,31 +216,32 @@ public class MyPlayer extends Player {
             if(b.getState(i, x1) == emptyField){
                 x_to_put_counter = i;
                 y_to_put_counter = x1;
+
             }
             if(b.getState(x1, i + 1) == emptyField){
                 x_to_put_counter = x1;
-                y_to_put_counter = i;
+                y_to_put_counter = i + 1;
+
             }
             if(b.getState(i + 1, x2) == emptyField){
-                x_to_put_counter = i;
+                x_to_put_counter = i + 1;
                 y_to_put_counter = x2;
+
             }
             if(b.getState(x2, i) == emptyField){
                 x_to_put_counter = x2;
                 y_to_put_counter = i;
+
             }
             // w checkFieldsach zliczyć ile jest moich/przeciwnika/w sumie pionków
         }
 
         if(number_of_my_counters<required_number_of_my_counters && number_of_fields>number_of_counters){
             // gdzieś tutaj mój postaw pionek
-            PentagoMove my_move = new PentagoMove(x_to_put_counter, y_to_put_counter, 1, 1, 1, 5, getColor()) ;
+            PentagoMove my_move = new PentagoMove((int)x_to_put_counter, (int)y_to_put_counter, 1, 1, 1, 5, getColor()) ;
             return tryToDoAMove(my_move, b, moves);
-            //return moves.get(5);
 
         }
-        //PentagoMove my_move = new PentagoMove(x_to_put_counter, y_to_put_counter, 1, 1, 1, 0, getColor()) ;
-        //return tryToDoAMove(my_move, b);
         return res;
     }
 
@@ -285,6 +286,7 @@ public class MyPlayer extends Player {
 
     @Override
     public Move nextMove(Board b) {
+        //N = b.getSize();
         return otherStrategy(b);
         //PentagoMove my_move = new PentagoMove(1, 1, 1, 3, 1, 1, getColor()) ;
         //return my_move;
