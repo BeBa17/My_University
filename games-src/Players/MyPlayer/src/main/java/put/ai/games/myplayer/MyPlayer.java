@@ -32,10 +32,6 @@ public class MyPlayer extends Player {
 
     public boolean checkRowDeng(int x1, int y1, Board b){
         // sprawdzam wiersz o podanym wierzchołku początkowym (x1, y1) i długości=W
-        /*
-        Jesli checkForDanger -> deng_or_poss = 0;
-        Jesli checkForPossibility -> deng_or_poss = 1;
-         */
         int number_of_searched_counters = 0;
         for(int x=x1; x<(x1+W); x++){
             if(b.getState(x, y1).equals( getColor() )){
@@ -59,41 +55,33 @@ public class MyPlayer extends Player {
 
     }
 
-    /*public boolean checkRow(int x1, int y1, int deng_or_poss){
+    public boolean checkRowPoss(int x1, int y1, Board b){
         // sprawdzam wiersz o podanym wierzchołku początkowym (x1, y1) i długości=W
-        /*
-        Jesli checkForDanger -> deng_or_poss = 0;
-        Jesli checkForPossibility -> deng_or_poss = 1;
-
         int number_of_searched_counters = 0;
-        int what_check_firstly = (deng_or_poss + 1)%2;
         for(int x=x1; x<(x1+W); x++){
-            if(checkField(x, y1, what_check_firstly)==true){
+            if( b.getState(x, y1).equals( opponentsColor() ) ){
                 return false;
             }
             // jesli min 1xTRUE to oznacz brak deng_or_poss;
             // możemy zwrócić false;
-            if(checkField(x, y1, deng_or_poss)==true){
+            if( b.getState(x, y1).equals( getColor() ) ){
                 number_of_searched_counters = number_of_searched_counters + 1;
+            }
+            if(number_of_searched_counters>=D){
+                potential_x = x1;
+                potential_y = y1;
+                in_row = true;
+                return true;
             }
             // dodatkow cały czas zliczamy czy zbierzemy min Wxdeng_or_poss
             // wowczas wystapilo deng_or_poss i zwracamy true
         }
-        if(number_of_searched_counters>=D){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return false;
 
-    }*/
+    }
 
     public boolean checkColumnDeng(int x1, int y1, Board b){
         // sprawdzam kolumnę o podanym wierzchołku początkowym (x1, y1) i długości=W
-        /*
-        Jesli checkForDanger -> deng_or_poss = 0;
-        Jesli checkForPossibility -> deng_or_poss = 1;
-         */
         int number_of_searched_counters = 0;
         for(int y=y1; y<(y1+W); y++){ // x1, y
             if(b.getState(x1, y).equals( getColor() )){
@@ -116,28 +104,23 @@ public class MyPlayer extends Player {
 
         return false;
     }
-/*
-    public boolean checkColumn(int x1, int y1, int deng_or_poss){
-        // sprawdzam kolumnę o podanym wierzchołku początkowym (x1, y1) i długości=W
-        /*
-        Jesli checkForDanger -> deng_or_poss = 0;
-        Jesli checkForPossibility -> deng_or_poss = 1;
 
+    public boolean checkColumnPoss(int x1, int y1, Board b){
+        // sprawdzam kolumnę o podanym wierzchołku początkowym (x1, y1) i długości=W
         int number_of_searched_counters = 0;
-        int what_check_firstly = (deng_or_poss + 1)%2;
         for(int y=y1; y<(y1+W); y++){
-            if(checkField(x1, y, what_check_firstly)==true){
+            if( b.getState(x1, y).equals( opponentsColor() ) ){
                 return false;
             }
             // jesli min 1xTRUE to oznacz brak deng_or_poss;
             // możemy zwrócić false;
-            if(checkField(x1, y, deng_or_poss)==true){
+            if( b.getState(x1, y).equals( getColor() ) ){
                 number_of_searched_counters = number_of_searched_counters + 1;
             }
             if(number_of_searched_counters>=D){
                 potential_x = x1;
                 potential_y = y1;
-                in_row = 0;
+                in_row = false;
                 return true;
             }
             // dodatkow cały czas zliczamy czy zbierzemy min Wxdeng_or_poss
@@ -145,7 +128,7 @@ public class MyPlayer extends Player {
         }
 
         return false;
-    }*/
+    }
 
     public boolean checkForDanger(Board b){
         boolean res = false;
@@ -166,17 +149,17 @@ public class MyPlayer extends Player {
         return res;
     }
 
-    /*public boolean checkForPossibility(){
+    public boolean checkForPossibility(Board b){
         for(int shift=0; shift<N; shift++){
             for(int r=0; r<N; r++){
-                checkRow(shift, r, 1);
+                checkRowPoss(shift, r, b);
             }
             for(int c=0; c<N; c++){
-                checkColumn(c, shift, 1);
+                checkColumnPoss(c, shift, b);
             }
         }
         return true;
-    }*/
+    }
 
     public int getRequiredNumberOfMyCounters(int number_of_fields, int half_or_all){
         if(half_or_all == 0){
@@ -369,7 +352,11 @@ public class MyPlayer extends Player {
         //N = b.getSize();
         List<Move> moves = b.getMovesFor(getColor());
         if(checkForDanger( b ) == false)
-            return otherStrategy(b);
+            if( checkForPossibility( b ) == false ){
+                return otherStrategy(b);
+            }
+            else
+                return freeField(potential_x, potential_y, in_row, b, moves);
         else
             return freeField(potential_x, potential_y, in_row, b, moves);
         //return my_move;
