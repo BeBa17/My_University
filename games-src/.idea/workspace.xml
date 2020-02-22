@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="NastyPlayer:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="75a7b501-ac42-42d4-a9a0-8b9b785bc82f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Players/MyPlayer/src/main/java/put/ai/games/myplayer/MyPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/Players/MyPlayer/src/main/java/put/ai/games/myplayer/MyPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Players/MyPlayer/target/MyPlayer-2.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/Players/MyPlayer/target/MyPlayer-2.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Players/MyPlayer/target/classes/put/ai/games/myplayer/MyPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/Players/MyPlayer/target/classes/put/ai/games/myplayer/MyPlayer.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Games" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1WQhH1vCnbqO0sEpzqll6Qyrmev" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Players/MyPlayer" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="75a7b501-ac42-42d4-a9a0-8b9b785bc82f" name="Default Changelist" comment="" />
+      <created>1579087639026</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1579087639026</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1506" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1579455858725">
+      <screen x="-1920" y="-157" width="1920" height="1040" />
+    </state>
+    <state x="-1506" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579455858725" />
+    <state x="-1155" y="73" key="#com.intellij.ide.util.MemberChooser" timestamp="1579121269726">
+      <screen x="-1920" y="-157" width="1920" height="1040" />
+    </state>
+    <state x="-1155" y="73" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579121269726" />
+    <state x="563" y="149" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1579206158922">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="563" y="149" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1366.728@0.0.1366.728" timestamp="1579206158922" />
+    <state x="526" y="193" key="FileChooserDialogImpl" timestamp="1579155477029">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="-1180" y="118" key="FileChooserDialogImpl/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579123278967" />
+    <state x="526" y="193" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1579155477029" />
+    <state width="1877" height="156" key="GridCell.Tab.0.bottom" timestamp="1579535934743">
+      <screen x="-1920" y="-157" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="156" key="GridCell.Tab.0.bottom/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579535934743" />
+    <state width="1323" height="103" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1579469348475" />
+    <state width="1877" height="156" key="GridCell.Tab.0.center" timestamp="1579535934743">
+      <screen x="-1920" y="-157" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="156" key="GridCell.Tab.0.center/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579535934743" />
+    <state width="1323" height="103" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1579469348475" />
+    <state width="1877" height="156" key="GridCell.Tab.0.left" timestamp="1579535934743">
+      <screen x="-1920" y="-157" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="156" key="GridCell.Tab.0.left/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579535934743" />
+    <state width="1323" height="103" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1579469348475" />
+    <state width="1877" height="156" key="GridCell.Tab.0.right" timestamp="1579535934743">
+      <screen x="-1920" y="-157" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="156" key="GridCell.Tab.0.right/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579535934743" />
+    <state width="1323" height="103" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1579469348475" />
+    <state x="313" y="0" key="SettingsEditor" timestamp="1579206770691">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="-1480" y="-62" key="SettingsEditor/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579123291136" />
+    <state x="313" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1579206770691" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1579530194530">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579530194530" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728/-1920.-157.1920.1040@0.0.1366.728" timestamp="1579446228191" />
+    <state x="379" y="189" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1579285891676" />
+    <state x="-1302" y="-17" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1579122662739">
+      <screen x="-1920" y="-157" width="1920" height="1040" />
+    </state>
+    <state x="-1302" y="-17" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1366.728/-1920.-157.1920.1040@-1920.-157.1920.1040" timestamp="1579122662739" />
+    <state x="65" y="0" key="new project wizard" timestamp="1579155111959">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="65" y="0" key="new project wizard/0.0.1366.728@0.0.1366.728" timestamp="1579155111959" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BoardGame/src/main/java/put/ai/games/game/Player.java</url>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
